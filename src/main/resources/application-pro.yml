@@ -1,0 +1,40 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  shutdown:
+    enabled: true
+
+server:
+  port: 8766
+
+spring:
+  application:
+    name: e-school-service-admin
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+  boot:
+    admin:
+      client:
+        url: http://localhost:8766
+
+eureka:
+  instance:
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+      leaseRenewalIntervalInSeconds: 10
+      health-check-url-path: /actuator/health
+  client:
+    registry-fetch-interval-seconds: 5
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://node1:18761/eureka,http://node2:18762/eureka,http://node3:18763/eureka
+
